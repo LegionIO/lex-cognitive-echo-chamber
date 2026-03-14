@@ -107,7 +107,7 @@ RSpec.describe Legion::Extensions::CognitiveEchoChamber::Helpers::Echo do
     end
 
     it 'clamps amplitude at 0.0' do
-      15.times { echo.dampen! }
+      30.times { echo.dampen! }
       expect(echo.amplitude).to eq(0.0)
     end
 

@@ -198,7 +198,11 @@ RSpec.describe Legion::Extensions::CognitiveEchoChamber::Helpers::Chamber do
     end
 
     it 'returns a symbol after adding resonating echoes' do
-      3.times { chamber.add_echo(described_class.new(label: 'x')) } rescue nil
+      resonating = Legion::Extensions::CognitiveEchoChamber::Helpers::Echo.new(
+        content:   'strong belief',
+        amplitude: 0.9
+      )
+      chamber.add_echo(resonating)
       expect(chamber.resonance_level).to be_a(Symbol)
     end
   end

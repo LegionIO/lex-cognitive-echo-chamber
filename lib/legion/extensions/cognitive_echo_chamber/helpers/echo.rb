@@ -26,8 +26,8 @@ module Legion
           end
 
           def amplify!(rate = AMPLIFICATION_RATE)
-            @frequency        += 1
-            @amplitude        = (@amplitude + rate).clamp(0.0, 1.0).round(10)
+            @frequency += 1
+            @amplitude = (@amplitude + rate).clamp(0.0, 1.0).round(10)
             self
           end
 

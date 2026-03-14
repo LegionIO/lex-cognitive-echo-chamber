@@ -47,9 +47,7 @@ module Legion
             return { success: false, error: 'chamber not found' } unless chamber
 
             result = chamber.disrupt!(force)
-            if result[:success]
-              record_disruption(chamber_id: chamber_id, force: force, result: result)
-            end
+            record_disruption(chamber_id: chamber_id, force: force, result: result) if result[:success]
             result
           end
 
@@ -88,14 +86,14 @@ module Legion
 
           def echo_report
             {
-              total_echoes:     @echoes.size,
-              active_echoes:    active_echoes.size,
+              total_echoes:      @echoes.size,
+              active_echoes:     active_echoes.size,
               resonating_echoes: resonating_echoes.size,
-              total_chambers:   @chambers.size,
-              sealed_chambers:  @chambers.values.count(&:sealed?),
-              porous_chambers:  @chambers.values.count(&:porous?),
-              disruption_count: @disruption_history.size,
-              loudest:          loudest_echoes(limit: 3).map(&:to_h)
+              total_chambers:    @chambers.size,
+              sealed_chambers:   @chambers.values.count(&:sealed?),
+              porous_chambers:   @chambers.values.count(&:porous?),
+              disruption_count:  @disruption_history.size,
+              loudest:           loudest_echoes(limit: 3).map(&:to_h)
             }
           end
 
@@ -141,10 +139,10 @@ module Legion
 
           def record_disruption(chamber_id:, force:, result:)
             @disruption_history << {
-              chamber_id:  chamber_id,
-              force:       force,
+              chamber_id:   chamber_id,
+              force:        force,
               breakthrough: result[:breakthrough],
-              occurred_at: Time.now.utc
+              occurred_at:  Time.now.utc
             }
           end
         end

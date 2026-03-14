@@ -53,7 +53,7 @@ module Legion
 
             @disruption_count += 1
             breakthrough = force - @wall_thickness
-            @wall_thickness = (@wall_thickness - breakthrough * BREAKTHROUGH_BONUS).clamp(0.0, 1.0).round(10)
+            @wall_thickness = (@wall_thickness - (breakthrough * BREAKTHROUGH_BONUS)).clamp(0.0, 1.0).round(10)
             @echoes.each_value { |e| e.dampen!(breakthrough.round(10)) }
             @state = :disrupted
             recalculate_resonance
@@ -113,10 +113,9 @@ module Legion
 
           def update_state
             return if @state == :disrupted || @state == :collapsed
+            return @state = :forming if @echoes.empty?
 
-            @state = if @echoes.empty?
-                       :forming
-                     elsif @resonance_frequency >= DISRUPTION_THRESHOLD
+            @state = if @resonance_frequency >= DISRUPTION_THRESHOLD
                        :saturated
                      elsif @resonance_frequency >= POROUS_THRESHOLD
                        :resonating
